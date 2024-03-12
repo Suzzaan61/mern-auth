@@ -8,7 +8,7 @@ function Header() {
                 <ul className={'flex justify-between items-center gap-6'}>
                     <Link to={'/'}><li>Home</li></Link>
                     <Link to={'/about'}><li>About</li></Link>
-                    <Link to={'/sign-up'}><li>Sign In</li></Link>
+                    <Link to={'/sign-in'}><li>Sign In</li></Link>
                 </ul>
             </div>
         </div>
