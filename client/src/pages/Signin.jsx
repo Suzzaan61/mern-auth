@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Signin(props) {
+function Signin() {
     return (
         <>Signin</>
     );
