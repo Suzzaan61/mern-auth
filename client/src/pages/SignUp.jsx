@@ -1,9 +1,10 @@
 import React from 'react';
 import {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function SignUp() {
+    const navigate = useNavigate();
     const[formData, setFormData] = useState({username:"",password:"",email:"",confirmPassword:""});
     const[error,setError]=useState(null);
     const [loading,setLoading]=useState(false);
@@ -37,6 +38,7 @@ function SignUp() {
                 return;
             }
             setError(false);
+            navigate('/sign-in');
         } catch (err){
             setLoading(false);
             setError(true);
