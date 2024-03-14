@@ -2,12 +2,15 @@ import React from 'react';
 import {useState} from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import UserSlice from "../redux/user/userSlice.js"
+import {signInStart, signInSuccess, signInFail} from "../redux/user/userSlice.js";
+import {useDispatch, useSelector} from "react-redux";
 
 function SignIn() {
+    const{ loading, error } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const[formData, setFormData] = useState({email:"",password:""});
-    const[error,setError]=useState(null);
-    const [loading,setLoading]=useState(false);
+    const dispatch = useDispatch();
     const handelChange = (e)=>{
         setFormData({...formData, [e.target.id] : e.target.value });
     }
@@ -15,34 +18,31 @@ function SignIn() {
     const handelSubmit = async (e) => {
         e.preventDefault();
         try{
-            setLoading(true);
-            setError(false);
+            dispatch(signInStart());
             // Using fetch
-            const res = await fetch('/api/auth/signin', {
+            const res = await fetch('http://localhost:8000/api/auth/signin', {
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
 
-
             // // Using axios
             // const baseURL = "/api/auth/signup";
             // const res = await axios.post(baseURL, formData);
+
+
             // console.log(res);
 
-
-            setLoading(false);
             if (data.success === false){
-                setError(true);
+                dispatch(signInFail(data));
                 return;
             }
-            setError(false);
+            dispatch(signInSuccess(data));
             navigate('/');
 
         } catch (err){
-            setLoading(false);
-            setError(true);
+            dispatch(signInFail(error));
         }
 
 
@@ -67,7 +67,7 @@ function SignIn() {
                     <p>Don't Have an Account?</p>
                     <Link to={'/sign-up'}><span className={'text-blue-700'}>Sign up</span></Link>
                 </div>
-                <p className={'text-red-500 text-left'}>{error && "something went wrong  "}</p>
+                <p className={'text-red-500 text-left'}>{error ? error.message || "Something went wrong" : ""}</p>
             </div>
         </>
     );

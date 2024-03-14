@@ -45,7 +45,7 @@ export const signin = async (req, res, next) => {
         // CHECK VALID PASSWORD
         const validPassword = await bcryptjs.compareSync(password, validUser.password);
         if (!validPassword) {
-            return next(errorHandler("401", "Wrong Credentials",));
+            return next(errorHandler("401", "wrong Credentials",));
         }
 
         const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
@@ -53,7 +53,7 @@ export const signin = async (req, res, next) => {
 
         const expireDate =new Date(Date.now() + 60 * 60 * 1000);
         res.cookie("access_token", token, { httpOnly: true, expires:expireDate })
-            .status(200).json({message:"successful",rest});
+            .status(200).json({message:"successful",rest,token});
 
     } catch (err){
         next(err)
