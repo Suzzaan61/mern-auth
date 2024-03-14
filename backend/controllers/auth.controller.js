@@ -53,7 +53,7 @@ export const signin = async (req, res, next) => {
 
         const expireDate =new Date(Date.now() + 60 * 60 * 1000);
         res.cookie("access_token", token, { httpOnly: true, expires:expireDate })
-            .status(200).json({message:"successful",rest,token});
+            .status(200).json({message:"successful",rest});
 
     } catch (err){
         next(err)
