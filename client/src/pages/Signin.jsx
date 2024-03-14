@@ -5,6 +5,7 @@ import axios from "axios";
 import UserSlice from "../redux/user/userSlice.js"
 import {signInStart, signInSuccess, signInFail} from "../redux/user/userSlice.js";
 import {useDispatch, useSelector} from "react-redux";
+import OAuth from "../components/OAuth.jsx";
 
 function SignIn() {
     const{ loading, error } = useSelector((state) => state.user);
@@ -60,6 +61,7 @@ function SignIn() {
                             className={'bg-slate-700 text-white p-3 rounded-lg uppercase w-full hover:opacity-95 disabled:opacity-85'}>
                         {loading ? 'Loading...' : 'Sign up'}
                     </button>
+                    <OAuth/>
 
                 </form>
 

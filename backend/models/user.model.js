@@ -15,6 +15,10 @@ const userSchema =new mongoose.Schema({
         type: String,
         required: true,
         trim: true },
+    profilePicture:{
+        type: String,
+        default:'https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png',
+    }
 },{timestamps: true});
 
 const User = mongoose.model("User", userSchema);

@@ -59,3 +59,30 @@ export const signin = async (req, res, next) => {
         next(err)
     }
 }
+
+export const google = async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if(user){
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+        const {password: hashedPassword, ...rest} = user._doc;
+        const expireDate =new Date(Date.now() + 60 * 60 * 1000);
+        res.cookie("access_token", token, { httpOnly: true, expires:expireDate }).status(200).json({message:"successful",rest});
+
+    } else{
+        const generatePassword = Math.random().toString(36).slice(-8);
+        const randomNumber = Math.floor(Math.random() * 10000);
+        const hashedPassword = await bcryptjs.hashSync(generatePassword, 12);
+        const newUser = new User({
+            username: req.body.name.split(" ").join("").toLowerCase() + randomNumber.toString(),
+            email: req.body.email,
+            password: hashedPassword,
+            profilePicture: req.body.photo,
+        })
+        await newUser.save();
+        const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET);
+
+        const {password: hashedPassword2, ...rest} = newUser._doc;
+        const expireDate =new Date(Date.now() + 60 * 60 * 1000);
+        res.cookie("access_token", token, { httpOnly: true, expires:expireDate }).status(201).json({message:"successful",rest});
+    }
+}
