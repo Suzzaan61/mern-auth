@@ -34,6 +34,7 @@ function SignIn() {
 
 
             // console.log(res);
+            console.log(data);
 
             if (data.success === false){
                 dispatch(signInFail(data));

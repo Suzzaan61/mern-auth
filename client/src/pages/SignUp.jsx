@@ -68,7 +68,7 @@ function SignUp() {
                     <p>Have an Account?</p>
                     <Link to={'/sign-in'}><span className={'text-blue-700'}>Sign in</span></Link>
                 </div>
-                <p className={'text-red-500 text-left'}>{error && "something went wrong  "}</p>
+                <p className={'text-red-500 text-left'}>{error && "something went wrong"}</p>
             </div>
         </>
     );
