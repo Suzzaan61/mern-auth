@@ -51,9 +51,9 @@ export const signin = async (req, res, next) => {
         const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
         const {password: hashedPassword, ...rest} = validUser._doc;
 
-        const expireDate =new Date(Date.now() + 60 * 60 * 1000);
-        res.cookie("access_token", token, { httpOnly: true, expires:expireDate })
-            .status(200).json({message:"successful",rest});
+        const expireDate = new Date(Date.now() + 60 * 60 * 1000); // Expiry time 1 hour from now
+        res.cookie("access_token", token, { expires: expireDate, httpOnly: true });
+        res.status(200).json({ message: "successful", rest });
 
     } catch (err){
         next(err)

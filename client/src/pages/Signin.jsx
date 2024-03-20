@@ -24,6 +24,7 @@ function SignIn() {
             const res = await fetch('http://localhost:8000/api/auth/signin', {
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
+                credentials: 'include',
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
@@ -70,7 +71,7 @@ function SignIn() {
                     <p>Don't Have an Account?</p>
                     <Link to={'/sign-up'}><span className={'text-blue-700'}>Sign up</span></Link>
                 </div>
-                <p className={'text-red-500 text-left'}>{error ? error.message || "Something went wrong" : ""}</p>
+                <p className={'text-red-500 text-left'}>{error ? error.message() || "Something went wrong" : ""}</p>
             </div>
         </>
     );

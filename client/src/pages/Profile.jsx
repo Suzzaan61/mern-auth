@@ -80,6 +80,4 @@ const [imageError, setImageError] = React.useState(null);
     );
 }
 
-export default Profile;
-
-
+export default Profile
