@@ -16,10 +16,12 @@ const corsConfig = {
 
 const port = process.env.PORT;
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cors(corsConfig));
+app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 
 mongoose
   .connect(process.env.MONGODB_URI)

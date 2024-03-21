@@ -28,6 +28,7 @@ function SignIn() {
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
+           await localStorage.setItem('token', data.token);
 
             // // Using axios
             // const baseURL = "/api/auth/signup";
@@ -71,7 +72,7 @@ function SignIn() {
                     <p>Don't Have an Account?</p>
                     <Link to={'/sign-up'}><span className={'text-blue-700'}>Sign up</span></Link>
                 </div>
-                <p className={'text-red-500 text-left'}>{error ? error.message() || "Something went wrong" : ""}</p>
+                <p className={'text-red-500 text-left'}>{error ? error.message || "Something went wrong" : ""}</p>
             </div>
         </>
     );

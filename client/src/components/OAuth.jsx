@@ -2,7 +2,7 @@
 import {app} from "../firebase";
 import {useDispatch} from "react-redux";
 import {signInSuccess} from "../redux/user/userSlice.js";
- import {useNavigate} from "react-router-dom";
+ import {Link, useNavigate} from "react-router-dom";
 
 const OAuth = () => {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const OAuth = () => {
                 }
             });
             const data = await response.json();
-            console.log(data);
+            await  localStorage.setItem("token", data.token);
             dispatch(signInSuccess(data));
             navigate('/');
 
