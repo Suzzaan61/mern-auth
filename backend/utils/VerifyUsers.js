@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import {errorHandler} from "./error.js";
 
 export const verifyToken = async (req, res, next) => {
-    const {token} = req.body;
+    const token = req.body.token;
 
     console.log(req.body);
 

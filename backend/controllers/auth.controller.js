@@ -7,7 +7,7 @@ export const signup = async (req, res, next) => {
     try {
         const {username, email, password, confirmPassword} = await req.body;
 
-        const hashedPassword = await bcryptjs.hashSync(password, 12);
+        const hashedPassword =  bcryptjs.hashSync(password, 12);
 
         if (!username || !username.length) {
             return res.status(400).json({error: 'Username is required',})
