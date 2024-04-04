@@ -6,13 +6,17 @@ import authRoutes from "./routes/auth.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser"
 dotenv.config();
+import path from "path";
 
 const app = express();
+
 
 const corsConfig = {
     credentials: true,
     origin: true,
 };
+
+const __dirname = path.resolve();
 
 const port = process.env.PORT;
 app.use(express.json());
@@ -21,7 +25,10 @@ app.use(express.static("public"));
 app.use(cors(corsConfig));
 app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static(path.join(__dirname, '/client/dist')));
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 mongoose
   .connect(process.env.MONGODB_URI)
